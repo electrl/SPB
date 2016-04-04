@@ -1,23 +1,22 @@
 import numpy as np
 
 max=30
+gen=0
+Axiom: R(5,max,gen)
 
-Axiom: R(5,max)
-
-derivation length: 30
+derivation length: 10
 production:
-R(x,max):
-  if x>50:
-    dir = np.random.random()
-    ang = np.random.random()*-60+30
+R(x,max,gen):
+  if x>60:
+    ang = np.random.random()*(-2*max)+max
     y = np.random.randint(100)
-    produce F(1) [^(ang) R(y,max)]
+    produce F(1) ^(ang) R(y,max,gen+1)
   else:
-    dir = np.random.random()
-    ang = np.random.random()*-60+30
+    new_max=max
+    ang = np.random.random()*(-2*max)+max
     y = np.random.randint(100)
     z = np.random.randint(100)
-    produce F(1) R(z,max) [^(ang) R(y,max)]
+    produce  R(z,new_max,gen+1) F(1) [^(ang) R(y,max,gen+1)]
   
 
 
