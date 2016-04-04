@@ -1,0 +1,27 @@
+import numpy as np
+
+max=30
+
+Axiom: R(5,max)
+
+derivation length: 30
+production:
+R(x,max):
+  if x>50:
+    dir = np.random.random()
+    ang = np.random.random()*-60+30
+    y = np.random.randint(100)
+    produce F(1) [^(ang) R(y,max)]
+  else:
+    dir = np.random.random()
+    ang = np.random.random()*-60+30
+    y = np.random.randint(100)
+    z = np.random.randint(100)
+    produce F(1) R(z,max) [^(ang) R(y,max)]
+  
+
+
+interpretation:
+
+
+endlsystem
