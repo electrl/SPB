@@ -1,23 +1,35 @@
 import numpy as np
 
-max=30
-gen=0
-Axiom: R(5,max,gen)
+max = 90
+gen = 1
+x = np.random.randint(100)
+Axiom: R(x,max,gen)
 
-derivation length: 10
+derivation length: 20
 production:
 R(x,max,gen):
-  if x>60:
-    ang = np.random.random()*(-2*max)+max
-    y = np.random.randint(100)
-    produce F(1) ^(ang) R(y,max,gen+1)
-  else:
-    new_max=max
-    ang = np.random.random()*(-2*max)+max
-    y = np.random.randint(100)
-    z = np.random.randint(100)
-    produce  R(z,new_max,gen+1) F(1) [^(ang) R(y,max,gen+1)]
-  
+  if gen < 3:
+    new_max=max/gen
+    if x > 60:
+      ang = np.random.random()*(-2*new_max)+new_max
+      y = np.random.randint(100)
+      produce F(1) ^(ang) R(y,new_max,gen+1)
+    elif x <90:
+      ang = np.random.random()*(-2*new_max)+new_max
+      y = np.random.randint(100)
+      z = np.random.randint(100)
+      produce  R(z,max,gen) F(1) [^(ang) R(y,max,gen+1)]
+  elif gen < 7:
+    new_max=max/(2*np.log(gen))
+    if x > 60:
+      ang = np.random.random()*(-2*new_max)+new_max
+      y = np.random.randint(100)
+      produce F(1) ^(ang) R(y,max,gen+1)
+    elif x <90:
+      ang = np.random.random()*(-2*max)+max
+      y = np.random.randint(100)
+      z = np.random.randint(100)
+      produce  R(z,max,gen) F(1) [^(ang) R(y,new_max,gen+1)]
 
 
 interpretation:
