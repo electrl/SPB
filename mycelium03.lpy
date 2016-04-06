@@ -1,0 +1,38 @@
+import numpy as np
+
+max=30
+gen=0
+
+#funkcja dystansu
+
+def check_neighbours(node,nodes):
+  return null
+#sprawdz czy mo?na si? rozrasta?  
+
+def dst(pt,pts):
+  return null
+  #return array z dystansami mi?dzy pozosta?ymi punktami
+
+dist_m = np.array([[0,0,0]])
+
+Axiom: R(5,max,gen)
+
+derivation length: 17
+production:
+R(x,max,gen):
+  if x>60:
+    ang = np.random.random()*(-2*max)+max
+    y = np.random.randint(100)
+    produce @setColor(1) F(1) ^(ang) R(y,max,gen+1) 
+  else:
+    new_max=max
+    ang = np.random.random()*(-2*max)+max
+    y = np.random.randint(100)
+    z = np.random.randint(100)
+    produce  R(z,new_max,gen+1) @setColor(1) F(1) [^(ang) R(y,max,gen+1)]
+  
+
+
+interpretation:
+
+endlsystem
