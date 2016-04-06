@@ -1,0 +1,37 @@
+import numpy as np
+
+max=90
+gen=1
+Axiom: R(5,max,gen)
+
+derivation length: 10
+production:
+R(x,max,gen):
+  if gen < 3:
+    new_max=max/gen
+    if x > 60:
+      ang = np.random.random()*(-2*max)+max
+      y = np.random.randint(100)
+      produce F(1) ^(ang) R(y,new_max,gen+1)
+    elif x <90:
+      ang = np.random.random()*(-2*max)+max
+      y = np.random.randint(100)
+      z = np.random.randint(100)
+      produce  R(z,max,gen) F(1) [^(ang) R(y,max,gen+1)]
+  elif gen < 7:
+    new_max=max/(2*np.log(gen))
+    if x > 60:
+      ang = np.random.random()*(-2*max)+max
+      y = np.random.randint(100)
+      produce F(1) ^(ang) R(y,max,gen+1)
+    elif x <90:
+      ang = np.random.random()*(-2*max)+max
+      y = np.random.randint(100)
+      z = np.random.randint(100)
+      produce  R(z,max,gen) F(1) [^(ang) R(y,new_max,gen+1)]
+
+
+interpretation:
+
+
+endlsystem

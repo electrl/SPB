@@ -1,0 +1,16 @@
+import numpy as np
+
+Axiom: R(x)
+
+derivation length: 4
+production:
+R(x):
+  dir = np.random()
+  ang = np.random()*(180/x)
+  produce F(1) +(ang) R(x)
+
+
+interpretation:
+
+
+endlsystem
