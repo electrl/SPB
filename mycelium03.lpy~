@@ -1,25 +1,64 @@
 import numpy as np
+from scipy.spatial import cKDTree
+import shapely.geometry as shg
+import copy as cp
 
-max=30
-gen=0
+max = 30
+parent_id = 1
+id = 0
+inter_pts = 7
+r = np.linspace(.99,0,inter_pts)
 
-dist_m = np.array([[0,0,0]])
+#stack initial point
+segments = [ shg.LineString([(0.,0),(0.,1)]) ]
+segments_term = [np.array([0.,1])]
 
-Axiom: R(5,max,gen)
+# funtion to generate point for line segment
+# rot in radians
+def rotate(start_pt,rot,r):
+  start_pt = start_pt + np.array([0, 1])
+  R = np.array([[np.cos(rot*np.pi/180),-np.sin(rot*np.pi/180)],[np.sin(rot*np.pi/180),np.cos(rot*np.pi/180)]])
+  return np.dot(R,start_pt)
+
+Axiom: R(5,max,parent_id,id,segments,segments_term)
 
 derivation length: 15
 production:
-R(x,max,gen):
+R(x,max,parent_id,id,segments,segments_term):
+  count = 0
+  hammerTime = True
+  ang = np.random.random()*(-2*max)+max
+  start_pt = segments_term[(parent_id-1)]
   if x>60:
-    ang = np.random.random()*(-2*max)+max
-    y = np.random.randint(100)
-    produce @SetColor(0) F(1) ^(ang) R(y,max,gen+1) 
+    while count <= (inter_pts-1) and hammerTime:
+      term_pt = rotate(start_pt, ang*np.pi/180., r[count])
+      probe_line = shg.LineString([start_pt, term_pt])
+      dist_min = [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ]
+      
+      # if we go to far we try withdraw a bit
+      if dist_min == 0:
+        count = count + 1
+      else:
+        segments = segments + [cp.copy(probe_line)]
+        segments_term = segments_term + [term_pt]
+        hammerTime = False
+        y = np.random.randint(100)
+        produce @SetColor(0)  F(r[count]) ^(ang) R(y,max,id,id+1,segments,segments_term)
   else:
-    new_max=max
-    ang = np.random.random()*(-2*max)+max
-    y = np.random.randint(100)
-    z = np.random.randint(100)
-    produce  R(z,new_max,gen+1) @SetColor(0) F(1) [^(ang) R(y,max,gen+1)]
+    while count <= (inter_pts-1) and hammerTime:
+      term_pt = rotate(start_pt, ang*np.pi/180., r[count])
+      probe_line = shg.LineString([start_pt, term_pt])
+      dist_min = [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ]
+      # if we go to far we try withdraw a bit
+      if dist_min == 0:
+        count = count + 1
+      else:
+        segments = segments + [cp.copy(probe_line)]
+        segments_term = segments_term + [term_pt]
+        hammerTime = False
+        y = np.random.randint(100)
+        z = np.random.randint(100)
+        produce  @SetColor(0) F(r[count]) R(z,max,id,id+1,segments,segments_term) [^(ang) R(y,max,id,id+2,segments,segments_term)]
   
 
 
