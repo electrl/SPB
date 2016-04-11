@@ -3,15 +3,16 @@ from scipy.spatial import cKDTree
 import shapely.geometry as shg
 import copy as cp
 
-max = 30
+count = 0
+max = 40
 parent_id = 1
-id = 0
+id = 1
 inter_pts = 7
-r = np.linspace(.99,0,inter_pts)
-
+r = np.linspace(.99,.26,inter_pts)
 #stack initial point
 segments = [ shg.LineString([(0.,0),(0.,1)]) ]
 segments_term = [np.array([0.,1])]
+dist_min = [0]
 
 # funtion to generate point for line segment
 # rot in radians
@@ -22,47 +23,90 @@ def rotate(start_pt,rot,r):
 
 Axiom: R(5,max,parent_id,id,segments,segments_term)
 
-derivation length: 15
+derivation length: 60
 production:
 R(x,max,parent_id,id,segments,segments_term):
   count = 0
   hammerTime = True
   ang = np.random.random()*(-2*max)+max
-  start_pt = segments_term[(parent_id-1)]
+  start_pt = segments_term[parent_id-1]
   if x>60:
     while count <= (inter_pts-1) and hammerTime:
       term_pt = rotate(start_pt, ang*np.pi/180., r[count])
       probe_line = shg.LineString([start_pt, term_pt])
-      dist_min = [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ]
-      
+      dist_min = np.min( [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ].append(100) )
       # if we go to far we try withdraw a bit
       if dist_min == 0:
         count = count + 1
+        ang = np.random.random()*(-2*max)+max
       else:
         segments = segments + [cp.copy(probe_line)]
-        segments_term = segments_term + [term_pt]
+        segments_term.append(term_pt)
         hammerTime = False
         y = np.random.randint(100)
-        produce @SetColor(0)  F(r[count]) ^(ang) R(y,max,id,id+1,segments,segments_term)
+        produce @SetColor(0) ^(ang) F(r[count],.05)  [ R(y,max,id,id+1,segments,segments_term)]
   else:
     while count <= (inter_pts-1) and hammerTime:
       term_pt = rotate(start_pt, ang*np.pi/180., r[count])
       probe_line = shg.LineString([start_pt, term_pt])
-      dist_min = [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ]
+      dist_min = np.min( [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ].append(100))
       # if we go to far we try withdraw a bit
-      if dist_min == 0:
+      if dist_min == 0 :
         count = count + 1
+        ang = np.random.random()*(-2*max)+max
       else:
         segments = segments + [cp.copy(probe_line)]
-        segments_term = segments_term + [term_pt]
+        segments_term.append(term_pt)
         hammerTime = False
         y = np.random.randint(100)
         z = np.random.randint(100)
-        produce  @SetColor(0) F(r[count]) R(z,max,id,id+1,segments,segments_term) [^(ang) R(y,max,id,id+2,segments,segments_term)]
-  
+        produce  @SetColor(0) R(z,max,id,id+1,segments,segments_term) [^(ang) F(r[count],.05) ]  
+        
+P(x,max,parent_id,id,segments,segments_term):
+  count = 0
+  hammerTime = True
+  ang = np.random.random()*(-2*max)+max
+  start_pt = segments_term[parent_id-1]
+  if x>60:
+    while count <= (inter_pts-1) and hammerTime:
+      term_pt = rotate(start_pt, ang*np.pi/180., r[count])
+      probe_line = shg.LineString([start_pt, term_pt])
+      dist_min = np.min( [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ].append(100) )
+      # if we go to far we try withdraw a bit
+      if dist_min == 0:
+        count = count + 1
+        ang = np.random.random()*(-2*max)+max
+      else:
+        segments = segments + [cp.copy(probe_line)]
+        segments_term.append(term_pt)
+        hammerTime = False
+        y = np.random.randint(100)
+        produce @SetColor(0) ^(ang) F(r[count],.05)  [ R(y,max,id,id+1,segments,segments_term)]
+  else:
+    while count <= (inter_pts-1) and hammerTime:
+      term_pt = rotate(start_pt, ang*np.pi/180., r[count])
+      probe_line = shg.LineString([start_pt, term_pt])
+      dist_min = np.min( [probe_line.distance(obj) for obj in (segments[:(parent_id-1)] + segments[parent_id:]) ].append(100))
+      # if we go to far we try withdraw a bit
+      if dist_min == 0 :
+        count = count + 1
+        ang = np.random.random()*(-2*max)+max
+      else:
+        segments = segments + [cp.copy(probe_line)]
+        segments_term.append(term_pt)
+        hammerTime = False
+        y = np.random.randint(100)
+        z = np.random.randint(100)
+        produce  @SetColor(0) R(z,max,id,id+1,segments,segments_term) [^(ang) F(r[count],.05)]
 
 
 interpretation:
 
 
 endlsystem
+###### INITIALISATION ######
+
+__lpy_code_version__ = 1.1
+
+def __initialiseContext__(context):
+	context.animation_timestep = 0.001
