@@ -1,0 +1,34 @@
+import numpy as np
+from scipy.spatial import cKDTree
+import shapely.geometry as shg
+import copy as cp
+
+max = 30
+parent_id = 1
+id = 1
+inter_pts = 7
+prev_ang = 0
+r = np.linspace(.99,.26,inter_pts)
+#stack initial point
+segments = []
+segments_term = [np.array([0.,0])]
+
+def rotate(start_pt,rot,r):
+  start_pt = np.array(start_pt) + np.array([0, 1])
+  R = np.array([[np.cos(rot*np.pi/180),-np.sin(rot*np.pi/180)],[np.sin(rot*np.pi/180),np.cos(rot*np.pi/180)]])
+  return np.dot(R,start_pt)
+
+Axiom: R(max,parent_id,id,prev_ang,segments,segments_term,dist_min)
+
+derivation length: 10
+production:
+R(max,parent_id,id,prev_ang,segments,segments_term,):
+  ang = (np.random.random()*(-2*max)+max) + prev_ang
+  start_pt = segments_term[parent_id-1]
+  
+
+
+interpretation:
+
+
+endlsystem
