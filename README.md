@@ -39,7 +39,7 @@ drawed_iters - max iterations for drawed node loop
 node_idx - count of nodes
 
 
-### To do
+### Possible extentions to add
 
 1. optimization
 2. branching between existing nodes
