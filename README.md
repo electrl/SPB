@@ -1,6 +1,11 @@
 # Mycelium 
 ## Simple 2D simulation of mycelium growth
-tbd
+
+Simulation aims to study myceliae branching an thus colonization patterns.
+
+##### Reference
+
+[1] Branching of fungal hyphae: regulation, mechanisms and comparison with other branching systems, Steven D. Harris, Mycologia 100 (6), 2008
 
 ### Rule for branching and model implementation
 We assume there is only one expanding branch. On each round, if possible - we expand leading branch. Then from all nodes we choose random but positive number of other nodes to expand. We assume the branches do not cross each other. We decide how close we allow two segments to be. Segments are added one at a time. Number of possible branches at a given node is limited. Segments' length and angle are random from given ranges.
@@ -41,7 +46,7 @@ node_idx - count of nodes
 
 ### Possible extentions to add
 
-1. optimization
+1. profiling and optimization
 2. branching between existing nodes
 3. smoothing graph shape
 4. add other agents or objects interacting with model
