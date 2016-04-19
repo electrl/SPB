@@ -5,7 +5,7 @@ Simulation aims to study myceliea branching an colonization patterns.
 
 ##### Reference
 
-[1] Branching of fungal hyphae: regulation, mechanisms and comparison with other branching systems, Steven D. Harris, Mycologia 100 (6), 2008
+[1] Steven D. Harris, Branching of fungal hyphae: regulation, mechanisms and comparison with other branching systems, Mycologia 100 (6), 2008
 
 ### Rule for branching and model implementation
 We assume there is only one expanding branch. On each round, if possible - we expand leading branch. Then from all nodes we choose random but positive number of other nodes to expand. We assume the branches do not cross each other. We decide how close we allow two segments to be. Segments are added one at a time. Number of possible branches at a given node is limited. Segments' length and angle are random from given ranges.
