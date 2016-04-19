@@ -1,7 +1,7 @@
 # Mycelium 
 ## Simple 2D simulation of mycelium growth
 
-Simulation aims to study myceliea branching an thus colonization patterns.
+Simulation aims to study myceliea branching an colonization patterns.
 
 ##### Reference
 
