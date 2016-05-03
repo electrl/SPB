@@ -3,6 +3,9 @@
 
 Simulation aims to study myceliea branching an colonization patterns.
 
+##### Requirements
+The simulation is prepared in Python 2.7. Apart from well know packages for scientific computing such as Numpy and Scipy we use Shapely (https://github.com/Toblerity/Shapely). For visualization we use Matplotlib.
+
 ##### Reference
 
 [1] Steven D. Harris, Branching of fungal hyphae: regulation, mechanisms and comparison with other branching systems, Mycologia 100 (6), 2008
