@@ -88,13 +88,9 @@ class Ant():
         self.__moves += 1
         
         # Update individual pheromone trail
-        '''
-        try:
-            self.__pheromone_deposited[ edge_n ] = self.__ph_dep
-        except:
-            self.__pheromone_deposited[ edge_n ] = self.__ph_dep
-        '''
+        
         self.__pheromone_deposited[ edge_n ] = self.__ph_dep
+        
         # Check if solution is complete or whether stop condition is met
         
         if not self.__nodes_to_visit:
