@@ -3,8 +3,8 @@ import copy as cp
 
 class Ant():
     def __init__(self, graph, start_nodes, uid, ntv, ph_dep=10., alpha=1., beta=1., moves=1000):
-        if alpha < 0 or beta < 0:
-            raise Exception("alpha and beta must be nonnegative")
+        if alpha < 0 or beta < 1:
+            raise Exception("alpha must by nonnegative and beta >= 1")
         
         self.__uid = uid
         
