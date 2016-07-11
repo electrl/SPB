@@ -1,7 +1,7 @@
 # Mycelium 
 ## Simple 2D simulation of mycelium growth
 
-Simulation aims to study myceliea branching an colonization patterns.
+Simulation aims to study myceliea branching and colonization patterns.
 
 ##### Requirements
 The simulation is prepared in Python 2.7. Apart from well know packages for scientific computing such as Numpy and Scipy we use Shapely (https://github.com/Toblerity/Shapely). For visualization we use Matplotlib.
